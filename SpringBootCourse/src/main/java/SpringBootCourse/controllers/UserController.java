@@ -1,8 +1,7 @@
 package SpringBootCourse.controllers;
 
 import SpringBootCourse.models.User;
-import SpringBootCourse.services.UserService;
-
+import SpringBootCourse.services.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserController {
 
-    private final UserService userService;
+    private final Service userService;
+
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(Service userService) {
         this.userService = userService;
     }
 
@@ -26,27 +26,26 @@ public class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public String showOneUser(Model model, @PathVariable("id") int id) {
+    public String showOneUser(Model model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.showOneUser(id));
         return "showOneUser";
     }
 
     @GetMapping("/user/edit/{id}")
-    public String getEditUser(Model model, @PathVariable("id") int id) {
+    public String getEditUser(Model model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.showOneUser(id));
         return "editUser";
     }
 
     @PatchMapping("/user/edit/{id}")
-    public String patchEditUser(@ModelAttribute("user") User user,
-                                @PathVariable("id") int id) {
-        userService.update(id, user);
+    public String patchEditUser(@ModelAttribute("user") User user) {
+        userService.add(user);
         return "redirect:/users";
     }
 
 
     @DeleteMapping("/user/delete/{id}")
-    public String deleteUser(@PathVariable("id") int id) {
+    public String deleteUser(@PathVariable("id") Long id) {
         userService.delete(id);
         return "redirect:/users";
     }

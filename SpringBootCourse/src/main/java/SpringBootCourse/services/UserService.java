@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements SpringBootCourse.services.Service {
 
     private final UserRepository userRepository;
 
@@ -25,15 +25,14 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public User showOneUser(int id) {
+    public User showOneUser(Long id) {
         Optional<User> user = userRepository.findById(id);
         return user.orElse(null);
     }
 
     @Transactional
-    public void delete(int id) {
-        User user = userRepository.findById(id).get();
-        userRepository.delete(user);
+    public void delete(Long id) {
+        userRepository.deleteById(id);
     }
 
     @Transactional
@@ -41,8 +40,4 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void update(int id, User user) {
-        user.setId(id);
-        userRepository.save(user);
-    }
 }
