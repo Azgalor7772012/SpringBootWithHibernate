@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserUserServiceHibernate implements UserService {
+public class UserServiceJpa implements UserService {
 
     private final UserRepository userRepository;
 
     @Autowired
-    public UserUserServiceHibernate(UserRepository userRepository) {
+    public UserServiceJpa(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
