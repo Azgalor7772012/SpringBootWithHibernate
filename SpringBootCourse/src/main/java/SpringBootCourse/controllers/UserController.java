@@ -1,7 +1,7 @@
 package SpringBootCourse.controllers;
 
 import SpringBootCourse.models.User;
-import SpringBootCourse.services.Service;
+import SpringBootCourse.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserController {
 
-    private final Service userService;
+    private final UserService userService;
 
 
     @Autowired
-    public UserController(Service userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -39,7 +39,7 @@ public class UserController {
 
     @PatchMapping("/user/edit/{id}")
     public String patchEditUser(@ModelAttribute("user") User user) {
-        userService.add(user);
+        userService.update(user);
         return "redirect:/users";
     }
 
